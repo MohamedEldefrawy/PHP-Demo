@@ -1,0 +1,15 @@
+{
+  "name": "dafro/phpdemo",
+  "description": "Demo for using native php",
+  "license": "MIT",
+  "autoload": {
+    "classmap": [
+      "Models",
+      "Dto",
+      "Services"
+    ],
+    "files": [
+      "config.php"
+    ]
+  }
+}
