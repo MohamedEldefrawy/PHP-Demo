@@ -24,7 +24,6 @@ class Counter
     {
         $file = file("counter.txt");
         $count = explode("=", $file[0])[1];
-        self::setCount($count);
-        self::$count += 1;
+        self::setCount((int)$count + 1);
     }
 }

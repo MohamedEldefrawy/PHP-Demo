@@ -2,6 +2,9 @@
   "name": "dafro/phpdemo",
   "description": "Demo for using native php",
   "license": "MIT",
+  "require": {
+    "illuminate/database": "*"
+  },
   "autoload": {
     "classmap": [
       "Models",
