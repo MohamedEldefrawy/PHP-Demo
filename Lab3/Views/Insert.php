@@ -6,12 +6,20 @@ $nameError = "";
 $priceError = "";
 $countryError = "";
 $idError = "";
+$photoError = "";
 
 $id = $_POST["id"];
 $name = $_POST["name"];
 $price = $_POST["price"];
 $country = $_POST["country"];
-$photo = $_POST["photo"];
+
+$photo = $_FILES['photo']['name'];
+$file_size = $_FILES['photo']['size'];
+$file_tmp = $_FILES['photo']['tmp_name'];
+$file_type = $_FILES['photo']['type'];
+$file_ext = explode('.', $_FILES['image']['name']);
+
+$extensions = array("jpeg", "jpg", "png");
 $itemsService = new ItemsService();
 
 
@@ -30,7 +38,18 @@ if (isset($_POST["submit"])) {
         $countryError = "Please enter valid country";
     }
 
-    if (empty($nameError) && empty($priceError) && empty($countryError)) {
+    if (isset($_FILES['image'])) {
+
+        if (in_array($file_ext, $extensions) === false) {
+            $photoError = "extension not allowed, please choose a JPEG or PNG file.";
+        }
+
+        if ($file_size > 2097152) {
+            $photoError = 'File size must be excately 2 MB';
+        }
+    }
+
+    if (empty($nameError) && empty($priceError) && empty($countryError) && empty($photoError)) {
 
         $itemsService->insertItem(
             [
@@ -40,7 +59,11 @@ if (isset($_POST["submit"])) {
                 "CouNtry" => $country,
                 "Photo" => $photo
             ]
+
         );
+
+        var_dump($file_tmp);
+        move_uploaded_file($file_tmp, "../Static/Images/" . $photo);
 
         $successPage = "<h1> item has been added</h1>" . "<a href='../index.php'>Products</a>";
         die($successPage);
