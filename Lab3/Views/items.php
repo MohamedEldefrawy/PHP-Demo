@@ -27,6 +27,6 @@ foreach ($records["all_records"] as $item) {
 }
 echo "</table>";
 echo "<div>";
-echo "<a href=" . $records["next_link"] . "> << Prev </a> | <a href=" . $records["previous_link"] . ">Next >> </a> </div> ";
+echo "<a href=" . $records["previous_link"] . "> << Prev </a> | <a href=" . $records["next_link"] . ">Next >> </a> </div> ";
 echo "<a href='../Views/Insert.php'>" . "Insert items </a>";
 

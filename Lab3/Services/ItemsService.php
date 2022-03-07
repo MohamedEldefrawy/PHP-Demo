@@ -26,4 +26,9 @@ class ItemsService
             "previous_link" => $previous_link
         ];
     }
+
+    public function insertItem(array $itemData)
+    {
+        $this->dbConnection->getDbContext()::table("items")->insert($itemData);
+    }
 }
