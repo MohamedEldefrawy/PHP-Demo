@@ -1,17 +1,25 @@
 <?php
+session_start();
+require_once("../vendor/autoload.php");
+
 $nameError = "";
 $priceError = "";
 $countryError = "";
-$photoError = "";
+$idError = "";
+
+$id = $_POST["id"];
 $name = $_POST["name"];
 $price = $_POST["price"];
 $country = $_POST["country"];
 $photo = $_POST["photo"];
+$itemsService = new ItemsService();
 
 
 if (isset($_POST["submit"])) {
-    $itemsService = new ItemsService();
 
+    if (empty($id)) {
+        $idError = "Please insert valid id";
+    }
     if (empty($name)) {
         $nameError = "name is required";
     }
@@ -21,22 +29,21 @@ if (isset($_POST["submit"])) {
     if (empty($country)) {
         $countryError = "Please enter valid country";
     }
-    if (empty($photo)) {
-        $photoError = "Please select product image";
-    }
 
-    echo "inserting....";
-    if (empty($nameError) && empty($priceError) && empty($countryError) && empty($photoError)) {
+    if (empty($nameError) && empty($priceError) && empty($countryError)) {
 
         $itemsService->insertItem(
             [
-                "id" => 1,
+                "id" => $id,
                 "product_name" => $name,
                 "list_price" => $price,
                 "CouNtry" => $country,
                 "Photo" => $photo
             ]
         );
+
+        $successPage = "<h1> item has been added</h1>" . "<a href='../index.php'>Products</a>";
+        die($successPage);
     }
 }
 
@@ -68,9 +75,13 @@ function get_default($field)
     <?php echo $countryError ?>
 </label>
 <label style="color: red">
-    <?php echo $photoError ?>
+    <?php echo $idError ?>
 </label>
 <form method="post" enctype="multipart/form-data" name="form-insert-items" action="./Insert.php">
+    <label>
+        Product ID :
+        <input type="number" name="id" value="<?php get_default("id"); ?>">
+    </label>
     <label>
         Product Name :
         <input type="text" name="name" value="<?php get_default("name"); ?>">
