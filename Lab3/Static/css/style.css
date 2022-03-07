@@ -1,0 +1,9 @@
+.product-image {
+    width: 10em;
+    height: 10em;
+}
+
+table, td, tr, th {
+    text-align: center;
+    border: double black 1px;
+}
